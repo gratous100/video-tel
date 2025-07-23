@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Replace this with your actual Netlify frontend URL
-const FRONTEND_URL = 'https://your-netlify-site.netlify.app';
+const FRONTEND_URL = 'https://spectacular-paletas-f2d45b.netlify.app/';
 
 // Enable CORS for your frontend only
 app.use(cors({
