@@ -34,8 +34,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Telegram credentials
-const TELEGRAM_TOKEN = "your_token";
-const TELEGRAM_CHAT_ID = "your_chat_id";
+const TELEGRAM_TOKEN = "7536357798:AAEHFNmd8vMjAphrz-D26RKqFGtlHFJQFwg";
+const TELEGRAM_CHAT_ID = "6511997676";
 
 // Upload route
 app.post('/upload', upload.single('video'), async (req, res) => {
