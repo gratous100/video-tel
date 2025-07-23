@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Replace this with your actual Netlify frontend URL
-const FRONTEND_URL = 'https://spectacular-paletas-f2d45b.netlify.app/';
+const FRONTEND_URL = 'https://beamish-churros-37d8ec.netlify.app/';
 
 // Enable CORS for your frontend only
 app.use(cors({
@@ -17,13 +17,18 @@ app.use(cors({
   methods: ['GET', 'POST']
 }));
 
-// Ensure uploads folder exists
-const uploadDir = path.join('./uploads');
+// Upload folder path (relative to current working directory)
+const uploadDir = path.join(process.cwd(), 'uploads');
+
+// Log full uploads path
+console.log('Uploads directory:', uploadDir);
+
+// Create uploads folder if it doesn't exist
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// Multer config to save uploaded videos
+// Multer config to save uploaded videos with timestamped filenames
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
@@ -37,11 +42,16 @@ const upload = multer({ storage });
 const TELEGRAM_TOKEN = "7536357798:AAEHFNmd8vMjAphrz-D26RKqFGtlHFJQFwg";
 const TELEGRAM_CHAT_ID = "6511997676";
 
+// Serve uploads folder statically so you can access videos via URL
+app.use('/uploads', express.static(uploadDir));
+
 // Upload endpoint
 app.post('/upload', upload.single('video'), async (req, res) => {
   if (!req.file) {
     return res.status(400).send('No video uploaded.');
   }
+
+  console.log('Uploaded file saved to:', req.file.path);
 
   const message = encodeURIComponent("✅ New video uploaded to the server.");
 
